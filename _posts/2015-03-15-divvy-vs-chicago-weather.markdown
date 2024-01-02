@@ -1,3 +1,10 @@
+---
+layout: post
+title:  "Divvy vs Chicago Weather"
+date:   2015-03-15 17:26:36 +0000
+categories: 
+---
+
 ## Exploring Chicago's weather
 Everyone who's lived in Chicago knows about its weather. We get all four seasons, and not necessarily in the expected order. The "feels like" temperature last year ranged from -40 to 95 degrees Fahrenheit. The Windy City lived up to its name with gusts up to 55 mph and the rain and snow was ever present. Throughout all this though, Divvy cyclists powered through, cycling on all but two days of the year, and that's only because the system was shut down!! Let's explore how the various forms of weather affected Divvy riders last year.
 
