@@ -4,6 +4,12 @@ title:  "Simulations"
 date:   2023-11-12 17:26:36 +0000
 categories: 
 ---
+Simulations are an underappreciated and underused tool in many companies. 
+Most companies have multiple complex systems, many times interacting with each other, which require constant optimisation and simply need constant monitoring to understand.
+We are generally afraid to touch these systems as we're unsure of the impact of the changes on it or on downstream systems.
+If we can build simulations that can correspond well enough to these systems to answer important questions about the systems, then we can more freely experiment in that sandbox environment and understand our systems more completely.
+Successes at large companies are out there ([Amazon](https://d1.awsstatic.com/events/Summits/reinvent2022/INO105_Supply-chain-and-logistics.pdf) and [Doordash](https://doordash.engineering/2022/08/16/4-essential-steps-for-building-a-simulator/) are two examples).
+I want to argue that teams that are implementing Machine Learning products are the same teams that have complex enough systems to warrant simulating, but are also the same teams with the skill sets to build and use simulations.
 
 ## What is a simulation
 > A simulation is the imitation of the operation of a real-world process or system over time
@@ -16,6 +22,9 @@ Trying to reproduce reality in a simpler modifiable setting
 - Could evaluate effectiveness of different flood protection measures
 - Saved millions in 1950s (on the order of a billion in today's money)
 - Tests on individual problems were conducted until 1971 but high costs and growth of computer modelling meant that the facility was put on standby.
+ ![img.png](/assets/images/simulations/MissBasinModel_Color_Aerial_800x538.jpg) ![img.png](/assets/images/simulations/Mississippiriver-new-01.png)
+
+
 
 ### What makes up a simulation
  ![img.png](/assets/images/simulations/components.png)
