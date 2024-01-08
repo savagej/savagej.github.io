@@ -10,22 +10,22 @@ We are generally afraid to touch these systems as we're unsure of the impact of 
 If we can build simulations that can correspond well enough to these systems to answer important questions about the systems, then we can more freely experiment in that sandbox environment and understand our systems more completely.
 Successes at large companies are out there ([Amazon](https://d1.awsstatic.com/events/Summits/reinvent2022/INO105_Supply-chain-and-logistics.pdf) and [Doordash](https://doordash.engineering/2022/08/16/4-essential-steps-for-building-a-simulator/) are two examples).
 I want to argue that teams that are implementing Machine Learning products are the same teams that have complex enough systems to warrant simulating, but are also the same teams with the skill sets to build and use simulations.
+In this post I want to go through the different components of a simulation, how to ensure your simulation can answer your questions without overengineering, and also ...
 
 ## What is a simulation
 > A simulation is the imitation of the operation of a real-world process or system over time
 
-Trying to reproduce reality in a simpler modifiable setting
+_[INTRODUCTION TO SIMULATION, Jerry Banks](https://dl.acm.org/doi/pdf/10.1145/324138.324142)_
 
-### Mississippi River Basin Model
-- Could run 1 day of water in 5 minutes
-- Could run different levels of flooding to examine effects
-- Could evaluate effectiveness of different flood protection measures
-- Saved millions in 1950s (on the order of a billion in today's money)
-- Tests on individual problems were conducted until 1971 but high costs and growth of computer modelling meant that the facility was put on standby.
+I think of a simulations as trying to reproduce reality in a simpler, modifiable setting. 
+A very tangible example of a simulation is the [Mississippi River Basin model](https://en.wikipedia.org/wiki/Mississippi_River_Basin_Model). 
+This was built in the 1940s to aid systematic understanding of flood control measures that had been built on the Mississippi river in the previous decade.
+These locks, run-off channels and levees could prevent local flooding but may increase flooding in other areas so it was clear that a big picture understanding of how to implement these measures was needed.
+Various segments of the Mississippi River became operational in the simulation throughout the 1950s, helping to avoid damage of an estimated $65 million in 1952 along (almost a billion dollars in today's money)
+Tests on individual problems were conducted until 1971 but high costs and growth of computer modelling meant that the facility was put on standby.
  ![img.png](/assets/images/simulations/MissBasinModel_Color_Aerial_800x538.jpg) ![img.png](/assets/images/simulations/Mississippiriver-new-01.png)
 
-
-
+We can use this example to explore the different parts that make up a simulation.
 ### What makes up a simulation
  ![img.png](/assets/images/simulations/components.png)
 - Input
@@ -47,6 +47,21 @@ For example using earth's atmosphere as a domain:
 
 ### Mechanism
 Dive into disease modelling
+#### time series
+https://www.sciencedirect.com/science/article/pii/S0960077920303441
+
+![img.png](/assets/images/simulations/timeseries-disease.png)
+#### compartment
+![img.png](/assets/images/simulations/compartment-disease.png)
+
+https://covid19.uclaml.org/model.html 
+https://en.wikipedia.org/wiki/Mathematical_modelling_of_infectious_diseases
+
+#### agents
+ ![img.png](/assets/images/simulations/agent-disease.png)
+https://pubmed.ncbi.nlm.nih.gov/16642006/
+
+
 
 ### Correspondence
 Why some simulations were bad 
