@@ -2,7 +2,7 @@
 layout: post
 title:  "Simulations"
 date:   2023-11-12 17:26:36 +0000
-categories: 
+categories: [science]
 ---
 Simulations are an underappreciated and underused tool in many companies. 
 Most companies have multiple complex systems, many times interacting with each other, which require constant optimisation and simply need constant monitoring to understand.
@@ -27,23 +27,28 @@ Tests on individual problems were conducted until 1971 but high costs and growth
 
 We can use this example to explore the different parts that make up a simulation.
 ### What makes up a simulation
+It's useful to separate the components of a simulation into three different parts: `Input`, `Mechanism`, and `Output`
+
  ![img.png](/assets/images/simulations/components.png)
-- Input
-  - Amount of water added at upstream points
-- Mechanism
-  - Literal recreation of the landscape at reduced scales
-  - Real physics (gravity, hydrodynamics etc)
-- Output
-  - Water heights at downstream points at various times
+
+For example in the Mississippi River Basin Model, the `Input` is the amount of water added at upstream points, and the `Output` is the water heights at downstream points at various times.
+The `Mechanism` is a literal recreation of the landscape at reduced scales, and the simulation propagates along using real physics (gravity, hydrodynamics etc).
+Many successful simulations take advantage of re-using parts of the real system for their mechanism.
+An important part of the mechanism are the configuration parameters, which in this case would be the various settings of the dams and levees.
+Many different simulations can be run with various `Inputs` and `Mechanism` config parameters to obtain `Outputs`.
 
 ![img.png](/assets/images/simulations/components-for.png)
 
-Depending on which part of the simulation is generating new data, the simulation is used for different purposes
-For example using earth's atmosphere as a domain:
-- What’s the weather tomorrow? -> Prediction
-- What would the climate be like next century IF we reduce emissions -> Prediction
-- How do hurricanes form? -> Explanation
-- What was the climate like 1million years ago -> Retrodiction
+Depending on which part of the simulation is generating *new* data, the simulation is used for different purposes. 
+For many practical applications, simulations are used for Prediction, i.e. the Mississippi River Basin Model was mostly used to predict what `Output`s would arise from various rainfall levels and flood control measure settings.
+
+For more theoretical applications, simulations are used for Explanation. Given `Inputs` that produce known `Outputs` in reality, if a `Mechanism` can reproduce these we can gain confidence that this corresponds to reality.
+This can be particularly useful in applications where fine-grained measurements of reality aren't possible. Imagine in 1950s that scientists wanted to understand the mechanism of water flow in remote regions of the Mississippi basin.
+Before satellites this measurement would have been difficult, but using a simulation these scientists could examine this in fine detail.
+In computer simulations, scientists may try to simplify the mechanism to the bare minimum required to reproduce known `Outputs` from `Inputs`, thus  gaining theoretical understanding of their domain.
+
+A less common application is to use simulations for Retrodiction. An interesting example of this is the theory that a [planet known as Theia](https://en.wikipedia.org/wiki/Theia_(planet)) smashed into Earth billions of years ago which resulted in the formation of our Moon.
+Many different `Inputs` (planet sizes, speeds etc) were trialed to find ones that match an `Output` of an Earth and Moon systems like ours (with the `Mechanism` being a physics engine)
 
 ### Mechanism
 Dive into disease modelling
