@@ -48,7 +48,7 @@ Before satellites this measurement would have been difficult, but using a simula
 In computer simulations, scientists may try to simplify the mechanism to the bare minimum required to reproduce known `Outputs` from `Inputs`, thus  gaining theoretical understanding of their domain.
 
 A less common application is to use simulations for Retrodiction. An interesting example of this is the theory that a [planet known as Theia](https://en.wikipedia.org/wiki/Theia_(planet)) smashed into Earth billions of years ago which resulted in the formation of our Moon.
-Many different `Inputs` (planet sizes, speeds etc) were trialed to find ones that match an `Output` of an Earth and Moon systems like ours (with the `Mechanism` being a physics engine)
+Many different `Inputs` (planet sizes, speeds etc) were [trialed](https://www.youtube.com/watch?v=kRlhlCWplqk) to find ones that match an `Output` of an Earth and Moon systems like ours (with the `Mechanism` being a physics engine)
 
 ## Correspondence
 Regardless of the use of the simulations, there are questions being asked by the users of the simulation. 
@@ -61,20 +61,41 @@ The degree to which your simulation contains the aspects of reality required to 
 
 To examine this idea of correspondence, we can look at three different methods of simulating the spread of infectious diseases.
 
-#### time series
+#### Time Series
 ![img.png](/assets/images/simulations/timeseries-disease.png)
 
-In a time series, we predict the `Output`, the incide using a model fit on some training data (historical `Inputs` and `Outputs`)[this study](https://www.sciencedirect.com/science/article/pii/S0960077920303441)
+In a time series, we predict the `Output`, the incidence of disease in the population,
+using a predictive model fit on some training data (historical `Inputs` and `Outputs`), see [this study](https://www.sciencedirect.com/science/article/pii/S0960077920303441) as an example.
+While this satisfies the technical definition of a simulation, with `Inputs`, (an extremely simple) 'Mechanism', and `Outputs`, 
+and can answer important questions about the future of a disease, it doesn't feel like the type of think we think of when we think of simulations.
+Let's examine some other methods before we examine why this doesn't seem like a good simulation.
 
-#### compartment
+#### Compartmental Model
 ![img.png](/assets/images/simulations/compartment-disease.png)
 
-https://covid19.uclaml.org/model.html 
-https://en.wikipedia.org/wiki/Mathematical_modelling_of_infectious_diseases
+In [compartmental models](https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology), a population of people is modelled,
+and each person in the population is assigned to one of three buckets: Susceptible, Infectious, or Recovered. 
+At the beginning of the simulation all but a small number of people are in the Susceptible bucket. 
+At each timestep of the simulation, there a probability that a Susceptible person will move to the Infected bucket, defined by the parameter β.
+There is also a probability that a person in the Infected bucket will move to Recovered, defined by the parameter γ.
 
-#### agents
+As this simulation moves through time, we will see an exponential increase in the number of people in the Infected bucket, 
+until it reaches a peak and then decays towards zero, as can be seen in the red line in the figure above.
+This was the infamous curve that we all wanted to flatten at the beginning of the COVID pandemic, 
+which can be flattened in the simulation by decreasing the parameter β. 
+In fact, you may remember at the beginning of the COVID pandemic that [we all kept very close watch](https://twitter.com/BenjAlvarez1/status/1250563198081740800) on R0, 
+the basic reproduction number of the disease, and R0 is simply calculated from β / γ.
+
+By varying the parameters β and γ diseases of different infectivities and populations with different behaviours can be modelled. [^1] 
+This allows researchers and public health officials predict what the likely outcome of various treatments or government measures would be on the spread of the disease.
+There are [many more extensions](https://covid19.uclaml.org/model.html) that can be made to this compartmental model to better match the details of the disease of interest,
+but this one will do for our discussion.
+
+#### Agent-based Model
  ![img.png](/assets/images/simulations/agent-disease.png)
 https://pubmed.ncbi.nlm.nih.gov/16642006/
+
+
 
 ![img.png](/assets/images/simulations/correspondence.png)
 
@@ -82,6 +103,8 @@ For infectious disease modelling, clearly we need to have some representation of
 - Time series model has no correspondence to these things that matter, so are a bad simulation
 - Compartment models have the bare minimum of correspondence, so we can only ask the bare minimum of questions
 - Agent based models have correspondence with many more parts of reality and so we can ask much more complex questions, at the cost of complexity
+
+[criticized for simplifying and unrealistic assumptions](https://www.jasss.org/23/2/10.html) 
 
 Notes
 Are there unnecessary parts we could remove to speed up/simplify the simulation
@@ -106,3 +129,5 @@ Necessary for later in presentation, not necessary here?
 
 ### Conclusion
 You should simulate too. If you want to, look into reinforcement learning papers to find how they've simulated since it's so data hungry
+
+[^1]: You can watch some beautiful explanations of the compartmental models [here](https://www.youtube.com/watch?v=7OLpKqTriio) (and many other simulations on the channed)
