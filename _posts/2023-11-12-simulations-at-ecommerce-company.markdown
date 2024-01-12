@@ -50,12 +50,22 @@ In computer simulations, scientists may try to simplify the mechanism to the bar
 A less common application is to use simulations for Retrodiction. An interesting example of this is the theory that a [planet known as Theia](https://en.wikipedia.org/wiki/Theia_(planet)) smashed into Earth billions of years ago which resulted in the formation of our Moon.
 Many different `Inputs` (planet sizes, speeds etc) were trialed to find ones that match an `Output` of an Earth and Moon systems like ours (with the `Mechanism` being a physics engine)
 
-### Mechanism
-Dive into disease modelling
-#### time series
-https://www.sciencedirect.com/science/article/pii/S0960077920303441
+## Correspondence
+Regardless of the use of the simulations, there are questions being asked by the users of the simulation. 
+Depending on the questions being asked, the simulation will need to more or less complex.
+There will be aspects of reality that are clearly not needed in the simulation (e.g. the phases of the moon don't need to be considered in a molecular simulation)
+and aspects of reality that are clearly necessary in the simulation (e.g. the electromagnetic force is necessary for a molecular simulation).
+The craft of building a simulation arises in determining the aspects of reality that aren't needed in the simulation and can be ignored, 
+which generally allows the simulation to run for longer or be calibrated more easily (or simply make it feasible to build at all).
+The degree to which your simulation contains the aspects of reality required to answer your question is known as the correspondence of your simulation.
 
+To examine this idea of correspondence, we can look at three different methods of simulating the spread of infectious diseases.
+
+#### time series
 ![img.png](/assets/images/simulations/timeseries-disease.png)
+
+In a time series, we predict the `Output`, the incide using a model fit on some training data (historical `Inputs` and `Outputs`)[this study](https://www.sciencedirect.com/science/article/pii/S0960077920303441)
+
 #### compartment
 ![img.png](/assets/images/simulations/compartment-disease.png)
 
@@ -66,10 +76,16 @@ https://en.wikipedia.org/wiki/Mathematical_modelling_of_infectious_diseases
  ![img.png](/assets/images/simulations/agent-disease.png)
 https://pubmed.ncbi.nlm.nih.gov/16642006/
 
+![img.png](/assets/images/simulations/correspondence.png)
 
+For infectious disease modelling, clearly we need to have some representation of individuals and movement of disease between individuals
+- Time series model has no correspondence to these things that matter, so are a bad simulation
+- Compartment models have the bare minimum of correspondence, so we can only ask the bare minimum of questions
+- Agent based models have correspondence with many more parts of reality and so we can ask much more complex questions, at the cost of complexity
 
-### Correspondence
-Why some simulations were bad 
+Notes
+Are there unnecessary parts we could remove to speed up/simplify the simulation
+Are there parts that are accidentally suggesting correspondence
 
 ### Calibration
 Necessary for later in presentation, not necessary here?
