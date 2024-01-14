@@ -51,6 +51,10 @@ A less common application is to use simulations for Retrodiction. An interesting
 Many different `Inputs` (planet sizes, speeds etc) were [trialed](https://www.youtube.com/watch?v=kRlhlCWplqk) to find ones that match an `Output` of an Earth and Moon systems like ours (with the `Mechanism` being a physics engine)
 
 ## Correspondence
+> It is the designer’s or user’s intentions that determine what a simulation is a simulation of and what features are to be taken as corresponding with reality.
+
+_[How simulations fail](https://link.springer.com/10.1007/s11229-011-9976-7)_
+
 Regardless of the use of the simulations, there are questions being asked by the users of the simulation. 
 Depending on the questions being asked, the simulation will need to more or less complex.
 There will be aspects of reality that are clearly not needed in the simulation (e.g. the phases of the moon don't need to be considered in a molecular simulation)
@@ -94,21 +98,45 @@ but this one will do for our discussion.
 #### Agent-based Model
  ![img.png](/assets/images/simulations/agent-disease.png)
 https://pubmed.ncbi.nlm.nih.gov/16642006/
+In [agent-based models](https://en.wikipedia.org/wiki/Agent-based_model#In_epidemiology), a population of people are again modelled,
+but this time each person's locations, movements, activities, and interactions with others etc. are all modeled. 
+ This results in the same curve of infection we have seen in the compartmental model, however the large increase in complexity means it much more closely models reality.
+This complexity allows the answering of much more complex questions. 
+In a [2006 paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7095311/) a agent-based study looked at the effectiveness of various prevention and containment strategies for an Influenza epidemic.
+They found that
+- border restrictions and/or internal travel restrictions are unlikely to delay spread by more than 2–3 weeks unless more than 99% effective.
+- School closure during the peak of a pandemic can reduce peak attack rates by up to 40%, but has little impact on overall attack rates,
+- Case isolation or household quarantine could have a significant impact, if feasible
 
+This level of detailed prescription likely helped give confidence to governments around the world to implement stay-at-home orders that would damage their economies.
+The complexity of these simulations come with a hefty price however, with the many parameters making them extremely difficult to calibrate and the level of detail causing them to be quite expensive to run.
 
+#### Correspondence
+
+Clearly these three types of simulations have very different levels of correspondence to reality. 
+For infectious disease modelling, clearly we need to have some representation of individuals and movement of disease between individuals at the very least.
+- Time series models have no correspondence to these things that matter, so don't let us ask very many questions that matter
+- Compartment models have the bare minimum of correspondence, so we can only ask the bare minimum of questions
+- Agent based models have correspondence with many more parts of reality, and so we can ask much more complex questions, at the cost of complexity
+
+In tension with this increasing ability to answer important questions about the system of interest, 
+is the ability to set up a calibrated simulation and to run the many different realisations of the simulation needed for exploration of the problem space and for statistical XXX.
+
+So the design of a simulation comes down to deciding on the questions that need to be answered, what aspects of reality matter to answering those questions.
+These aspects of reality clearly must be represented faithfully in the mechanism.
+
+For example in the compartmental model, even though it is an extremely simple simulation, the two aspects of the problem that matter in reality do correspond in the simulation.
+What about an aspect of disease spread that we know is important in reality, for example how much people move around and interact with other people.
+In the compartmental model, this is baked into the β parameter, so this doesn't correspond to reality. 
+However this is an intentional choice by the designers of the simulation. 
+Many important parts of real-life disease spread are abstracted into the β parameter, allowing epidemiologists to study the dynamics of diseases more generally and extremely efficiently.
+If we do want to ask questions about people's movement, then we need to ensure this is represented faithfully in the simulation, as is done in the agent-based model.
 
 ![img.png](/assets/images/simulations/correspondence.png)
 
-For infectious disease modelling, clearly we need to have some representation of individuals and movement of disease between individuals
-- Time series model has no correspondence to these things that matter, so are a bad simulation
-- Compartment models have the bare minimum of correspondence, so we can only ask the bare minimum of questions
-- Agent based models have correspondence with many more parts of reality and so we can ask much more complex questions, at the cost of complexity
-
+It's important to note that correspondence to reality is subjective, and even the agent-based models have been 
 [criticized for simplifying and unrealistic assumptions](https://www.jasss.org/23/2/10.html) 
 
-Notes
-Are there unnecessary parts we could remove to speed up/simplify the simulation
-Are there parts that are accidentally suggesting correspondence
 
 ### Calibration
 Necessary for later in presentation, not necessary here?
@@ -130,4 +158,7 @@ Necessary for later in presentation, not necessary here?
 ### Conclusion
 You should simulate too. If you want to, look into reinforcement learning papers to find how they've simulated since it's so data hungry
 
-[^1]: You can watch some beautiful explanations of the compartmental models [here](https://www.youtube.com/watch?v=7OLpKqTriio) (and many other simulations on the channed)
+There are many other aspects of running a simulation that are interesting to discuss which I may add in future parts, 
+including "production bias" in simulation results, the operations of running and analysing simulations
+
+[^1]: You can watch some beautiful explanations of the compartmental models [here](https://www.youtube.com/watch?v=7OLpKqTriio) (and many other simulations on the channel)
