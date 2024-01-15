@@ -120,7 +120,7 @@ For infectious disease modelling, clearly we need to have some representation of
 - Agent based models have correspondence with many more parts of reality, and so we can ask much more complex questions, at the cost of complexity
 
 In tension with this increasing ability to answer important questions about the system of interest, 
-is the ability to set up a calibrated simulation and to run the many different realisations of the simulation needed for exploration of the problem space and for statistical XXX.
+is the ability to set up a calibrated simulation and to run the many different realisations of the simulation needed for exploration of the problem space and for statistical significance.
 
 So the design of a simulation comes down to deciding on the questions that need to be answered, what aspects of reality matter to answering those questions.
 These aspects of reality clearly must be represented faithfully in the mechanism.
@@ -134,14 +134,15 @@ If we do want to ask questions about people's movement, then we need to ensure t
 
 ![img.png](/assets/images/simulations/correspondence.png)
 
+We can therefore break up the aspects of reality into the parts that matter to answering the question and the parts that don't.
+In the simulation, the parts that matter must correspond in the simulation to gain insights, otherwise you will get erroneous results.
+For the parts of reality that don't matter, making them correspond will generally lead to wasted resources in simulation setup and runtime.
+These parts can either be ignored if they are truly not relevant (e.g. we don't need to simulate tectonic plates in a disease simulation),
+or abstracted into parameters or components of the simulation.
+For example, the β parameter in the compartmental model doesn't correspond to anything concrete in reality, 
+but stands in for many different aspects of disease spread from infected to non-infected people (e.g. contact rates, disease infectivity, mask wearing etc.)
 It's important to note that correspondence to reality is subjective, and even the agent-based models have been 
-[criticized for simplifying and unrealistic assumptions](https://www.jasss.org/23/2/10.html) 
-
-
-### Calibration
-Necessary for later in presentation, not necessary here?
-
-### Running a simulation
+[criticized for simplifying and unrealistic assumptions](https://www.jasss.org/23/2/10.html)
 
 ### Why use simulations
 - Make predictions about the future
@@ -156,9 +157,10 @@ Necessary for later in presentation, not necessary here?
 - Protein simulations allow visualization of the movement of proteins 
 
 ### Conclusion
-You should simulate too. If you want to, look into reinforcement learning papers to find how they've simulated since it's so data hungry
+You should simulate too. If you want to, look into reinforcement learning papers to find how they've simulated since it's so data hungry.
+Simulation is used in many real-world applications, and we in the data/software field should take note of the potential for our domains.
 
 There are many other aspects of running a simulation that are interesting to discuss which I may add in future parts, 
-including "production bias" in simulation results, the operations of running and analysing simulations
+including calibration of simulations and avoiding "production bias" in simulation results, as well as more on the "SimOps" of running and analysing simulations.
 
 [^1]: You can watch some beautiful explanations of the compartmental models [here](https://www.youtube.com/watch?v=7OLpKqTriio) (and many other simulations on the channel)
