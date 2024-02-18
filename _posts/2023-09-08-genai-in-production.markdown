@@ -11,11 +11,13 @@ categories: []
 hands are wrong.
 
 _Cult of Done Manifesto_
+
 I haven’t built any gen ai
-Trying to learn from those who have
-Need to keep in mind there are many biases in the views given, pessimistic ones from those fearful of change, optimistic ones from those selling picks and shovels in a gold rush, and overoptimistic ones from the futergazers that come out in every hype cycle
-I liked the conference I was at as it balanced those viewpoints well
-## What will we learn
+Trying to learn from those who have, so I attended the [LLMs in Production conference](https://home.mlops.community/public/events/llms-in-production-conference-2023-04-13)
+Need to keep in mind there are many biases in the views given, pessimistic ones from those fearful of change, optimistic ones from those selling picks and shovels in a gold rush, and overoptimistic ones from the future-gazers that come out in every hype cycle
+I liked the conference I was at as it balanced those viewpoints well. 
+This is an attempt to summarise what I learned, mostly with the the viewpoint of a company who is well versed in ML but is feeling pressure to "do something with LLMs"
+## Contents
 - How can we build our initial versions of GenAI applications
   - V1 using public APIs
   - Initial roadblocks to using V1
@@ -26,22 +28,44 @@ I liked the conference I was at as it balanced those viewpoints well
   - Data: Data, data, data
 - What might be useful strategies to proceed?
 
-LLMs most successful type of model known as a foundation model, trained on HUGE amounts of data, basically the entire internet only to be able to predict what the next work in a sentence would be
-In learning how to do this and with more instruction fine tuning, we discovered these models could reason and solve problems and got the label generative AI, most commonly seen with ChatGPT and copilot
-Beyond copilots, automation of these models are still being worked on, and the long term future is to develop agents, capably of achieving a task e.g. ”go buy me a bue couch for my living room for less than$1000)
-It’s important to realise that although copilots are where we’ve all had the most interaction with generative ai, it’s likely that the short-term successes we’ll see will come from large language models, and when we get to using GenAI it may not be as a copilot​
+## Intro
+LLMs are the most successful type of model known as a foundation model, trained on HUGE amounts of data, basically the entire internet
+only to be able to predict what the next work in a sentence would be.
+In learning how to do this simple task (and particularly with the addition of instruction fine-tuning), 
+researchers discovered these models could reason, solve problems, and create new, creative-seeming pieces of work,
+getting the label Generative AI, most commonly seen with ChatGPT, DALL-E and Copilot.
+
+![img.png](/assets/images/genai-in-prod/context.png)
+
+Beyond copilots, automation of these models are still being worked on, 
+and the long term future is to develop agents, capably of achieving a task e.g. ”go buy me a bue couch for my living room for less than$1000)
+It’s important to realise that although copilots are where we’ve all had the most interaction with generative ai,
+it’s likely that the short-term successes for many non-data-rich companies will come from large language models,
+and when we get to using GenAI it may not be as a copilot
 
 ## ML Product Development
-![img.png](/assets/images/genai-in-prod/img.png)
-V1 allows you to evaluate product market fit -> Does the customer even want to
-use this
+The main benefit that kept being brought up with LLMs was the ability to reach Version 1 of your product much quicker
 
-LLMs allow you to get to V1 much quicker
+![img.png](/assets/images/genai-in-prod/lifecycle.png)
 
-### What does V1 look like
-![img_1.png](/assets/images/genai-in-prod/img_1.png)
-- Evaluation of the output allows for finding prompts that work best
-  - Evaluation can be verrry tricky for complex tasks, so can get away with LGTM for V1
+A traditional ML product has generally required the sourcing or creation of datasets, a long process of model training and evaluation,
+plus hosting of the model for inference. There have been growing numbers of off-the-shelf solutions, but these have been 
+for limited use cases, and so were difficult to use as differentiators.
+Due to the zero-shot/few-shot capabilities of LLMs (and the fact they're hosted behind an inexpensive API),
+suddenly we have a model capable of solving a huge variety of tasks with just a bit of prompt tuning (and maybe the addition of some context)
+While this version of your product may be too expensive or high-latency to use in reality, it crucially allows you to
+evaluate product-market fit i.e. does the customer even want to use this.
+Too many times in the past we have gone through the traditional ML product lifecycle only to discover that the customer has 
+no interest in the product!
+
+#### What does V1 look like
+![img_1.png](/assets/images/genai-in-prod/version-1.png)
+
+The user's input (e.g. their query to your system) is wrapped in a prompt and sent to an LLM API (e.g. OpenAI). 
+The response can then be parsed before sending the desired result to the user. 
+Evaluation of the response allows for finding prompts that work best
+Evaluation can be [quite tricky for complex tasks](https://eugeneyan.com/writing/llm-patterns/#evals-to-measure-performance),
+so you can get away with [LGTM](https://en.wiktionary.org/wiki/LGTM)@few for V1
 - What if the model doesn’t know anything about the task?
   - For example, requires knowledge of internal data or information from 2023
 
@@ -54,7 +78,7 @@ its training data.
 Limited by the quality of the search system, with low recall you’re in trouble. 
 Imagine using Teams search vs Slack search for a documentation assistant
 
-### Beyond V1
+#### Beyond V1
 - Likely to be two major issues to contend with if V1 is used by customers
   - Performance isn’t sufficient: Not accurate enough
   - Cost/latency isn’t sufficient: Calling out to an external API is expensive and slow
