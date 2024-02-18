@@ -11,7 +11,10 @@ categories: []
 hands are wrong.
 
 _Cult of Done Manifesto_
-
+I haven’t built any gen ai
+Trying to learn from those who have
+Need to keep in mind there are many biases in the views given, pessimistic ones from those fearful of change, optimistic ones from those selling picks and shovels in a gold rush, and overoptimistic ones from the futergazers that come out in every hype cycle
+I liked the conference I was at as it balanced those viewpoints well
 ## What will we learn
 - How can we build our initial versions of GenAI applications
   - V1 using public APIs
@@ -22,6 +25,11 @@ _Cult of Done Manifesto_
   - Science: Fine-tuning, Evaluation
   - Data: Data, data, data
 - What might be useful strategies to proceed?
+
+LLMs most successful type of model known as a foundation model, trained on HUGE amounts of data, basically the entire internet only to be able to predict what the next work in a sentence would be
+In learning how to do this and with more instruction fine tuning, we discovered these models could reason and solve problems and got the label generative AI, most commonly seen with ChatGPT and copilot
+Beyond copilots, automation of these models are still being worked on, and the long term future is to develop agents, capably of achieving a task e.g. ”go buy me a bue couch for my living room for less than$1000)
+It’s important to realise that although copilots are where we’ve all had the most interaction with generative ai, it’s likely that the short-term successes we’ll see will come from large language models, and when we get to using GenAI it may not be as a copilot​
 
 ## ML Product Development
 ![img.png](/assets/images/genai-in-prod/img.png)
@@ -84,7 +92,7 @@ doesn’t make sense
 – Training
 ▪ Requires: Labeled examples (data) and evaluation metrics
 ▪ Nice to have: OS foundation model, self-hosting
-
+“unlocking the capabilities that the pretrained model already has but are hard for users to access via prompting alone”
 #### Cost & Latency
 ▪ Anecdotally cost and latency of OpenAI APIs too high for production applications,
 particularly for high-volume automated tasks
@@ -100,6 +108,7 @@ In-house model hosting
 cost of latency
 ▪ Need techniques to reduce the size of model
 while retaining performance
+Note even shrking 1000x will require engineering prowess to host effectively
 ![img_4.png](/assets/images/genai-in-prod/img_4.png)
 
 Quantisation
@@ -114,12 +123,17 @@ to a more manageable 48GB
 Distillation
 ▪ Use ”teacher” model (B parameter) to generate training data to train “student”
 model (M parameter)
+Note these “small” models are still FAR larger than anything we currently host at overstock
 
 ### What does V2 and beyond look like
 ![img_5.png](/assets/images/genai-in-prod/img_5.png)
 
 Insert a16z app stack image compared to ml in context
+https://a16z.com/emerging-architectures-for-llm-applications/​
 
+This is a “asset light” stack i.e. assumes no fine-tuning or self-hosting​
+
+Fine tuning adds an offline data pipeline and evaluation, self-hosting requires more again
 ## Generative AI in Production
 - Good Science necessary but not sufficient
   - Designing good evaluation
@@ -140,6 +154,7 @@ Insert a16z app stack image compared to ml in context
 
 ## Practical next steps
 Chip huyen link
+https://huyenchip.com/2023/06/07/generative-ai-strategy.html
 
 ## Conclusion
 A generative culture
