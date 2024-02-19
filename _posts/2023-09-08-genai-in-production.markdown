@@ -65,25 +65,39 @@ The user's input (e.g. their query to your system) is wrapped in a prompt and se
 The response can then be parsed before sending the desired result to the user. 
 Evaluation of the response allows for finding prompts that work best
 Evaluation can be [quite tricky for complex tasks](https://eugeneyan.com/writing/llm-patterns/#evals-to-measure-performance),
-so you can get away with [LGTM](https://en.wiktionary.org/wiki/LGTM)@few for V1
-- What if the model doesn’t know anything about the task?
-  - For example, requires knowledge of internal data or information from 2023
+so you can get away with [LGTM](https://en.wiktionary.org/wiki/LGTM)@few for V1, but the earlier you implement
+evaluation the better your product will be.
+What if the model doesn’t know anything about the task? 
+For example, requires knowledge of data internal to your company or information from after the model was trained
+(e.g. the score from today's football game).
+Then you want to somehow retrieve that relevant information and provide it to the model.
 
 #### Retrieval Augmented Generation (RAG)
-Think of the model as a reasoning engine rather than a knowledge store.
-More success from asking a question and providing relevant context
+It is useful to think of the model as a reasoning engine rather than a knowledge store. 
+This shift in thinking can help get the best out of foundation models, 
+as they are likely to respond with any answer at all rather than say "I don't know" i.e. hallucinate.
+Therefore, we will get more success from asking a question and providing relevant context,
+which is true of human interactions too. Compare the question "What is the best bed?" to the question
+"What is the best bed out of these 100 options, given that I am a 36-year-old male redecorating my daughter's room"
 ![img_2.png](/assets/images/genai-in-prod/img_2.png)
-Providing relevant information allows the model to respond with information not in
-its training data. 
-Limited by the quality of the search system, with low recall you’re in trouble. 
-Imagine using Teams search vs Slack search for a documentation assistant
+Providing relevant information allows the model to respond with information not in its training data and 
+also helps prevent fabrication of plausible but non-existent information.
+The main limitation is the quality of the search system, if you have low recall you will not be providing the 
+model with the facts it requires for its reasoning. 
+
+Most descriptions of RAG assume using a vector search engine for this step, presumably because practitioners familiar
+with LLMs are more comfortable working with embeddings of text than using information retrieval methods. 
+However, there's no good reason to prefer semantic search over keyword search for this application, and generally 
+the best choice for V1 is the search system that's most prevalent at your company 
+(in other words don't spend your [innovation tokens](https://boringtechnology.club/) on a new search system since you likely need to spend them elsewhere in this novel product)
 
 #### Beyond V1
-- Likely to be two major issues to contend with if V1 is used by customers
-  - Performance isn’t sufficient: Not accurate enough
-  - Cost/latency isn’t sufficient: Calling out to an external API is expensive and slow
-- Solutions for these problems
-  - Performance
+If you get to the lucky place that V1 is actually used by customers, there are likely to be two major issues to contend with:
+  - Accuracy isn’t sufficient
+  - Cost/latency isn’t sufficient 
+
+The main solutions for these problems outlined in this [great panel discussion](https://home.mlops.community/public/videos/cost-optimization-and-performance) were:
+  - Accuracy
     - Fine tuning
   - Cost/Latency
     - Use in-house model
