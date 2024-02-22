@@ -16,7 +16,8 @@ I haven’t built any gen ai
 Trying to learn from those who have, so I attended the [LLMs in Production conference](https://home.mlops.community/public/events/llms-in-production-conference-2023-04-13)
 Need to keep in mind there are many biases in the views given, pessimistic ones from those fearful of change, optimistic ones from those selling picks and shovels in a gold rush, and overoptimistic ones from the future-gazers that come out in every hype cycle
 I liked the conference I was at as it balanced those viewpoints well. 
-This is an attempt to summarise what I learned, mostly with the the viewpoint of a company who is well versed in ML but is feeling pressure to "do something with LLMs"
+This is an attempt to summarise what I learned, mostly with the viewpoint of a company who is well versed in ML but is feeling pressure to "do something with LLMs"
+
 ## Contents
 - How can we build our initial versions of GenAI applications
   - V1 using public APIs
@@ -79,7 +80,7 @@ as they are likely to respond with any answer at all rather than say "I don't kn
 Therefore, we will get more success from asking a question and providing relevant context,
 which is true of human interactions too. Compare the question "What is the best bed?" to the question
 "What is the best bed out of these 100 options, given that I am a 36-year-old male redecorating my daughter's room"
-![img_2.png](/assets/images/genai-in-prod/img_2.png)
+![img_2.png](/assets/images/genai-in-prod/rag.png)
 Providing relevant information allows the model to respond with information not in its training data and 
 also helps prevent fabrication of plausible but non-existent information.
 The main limitation is the quality of the search system, if you have low recall you will not be providing the 
@@ -103,75 +104,75 @@ The main solutions for these problems outlined in this [great panel discussion](
     - Use in-house model
     - Distill/quantize in-house model
 
+#### Accuracy 
+There are a lot of performance improvements to be obtained with just the base API model. 
+Improvements to RAG context can be obtained with better search systems.
+Prompt engineering (e.g. few shot prompting, chain-of-thought prompting) can make large improvements
+but changes to the model behind the API can render this work obsolete very quickly.
+At a certain point, fine-tuning is required, particularly in domain specific applications which may not be 
+well represented in training data for the API models e.g. legal, finance, health
 
+##### Fine-tuning
+- Freeze most/all weights of the foundation model, fit an additional set of weights in
+the model
+- Can be done at Open AI/GCP, but in the context of cost/latency section maybe
+doesn’t make sense
+- Relatively cheap to finetune so could be a good V1.1
+- Numerous steps
+  - Labelling
+  - Evaluation
+  - Training
+- Requires: Labeled examples (data) and evaluation metrics
+- Nice to have: OS foundation model, self-hosting
+  “unlocking the capabilities that the pretrained model already has but are hard for users to access via prompting alone”
+
+#### Cost & Latency
+Anecdotally, cost and latency of OpenAI APIs too high for production applications, 
+particularly for high-volume automated tasks or non-chat user facing applications. 
+High-volume automated tasks are also the tasks most suitable for training smaller expert models that can be self-hosted
+And example task from this [great panel discussion](https://home.mlops.community/public/videos/cost-optimization-and-performance)  was summarizing web pages for a web search index
+Open AI API allowed them to evaluate whether LLMs were capable of task.
+Self-hosted, distilled open-source model allowed them to summarise every web page in their index.
+
+##### In-house model hosting
+- LLMs are BIG
+- Naive self-hosting potentially increases the cost of latency
+- Need techniques to reduce the size of model while retaining performance
+
+Note even shrinking 1000x will require engineering prowess to host effectively
+![img_4.png](/assets/images/genai-in-prod/nvidia.png)
+
+##### Quantisation
+- Keep model size, reduce resolution of model weights
+- For example, float32to float16 or float32 to int8
+- Recently been extended to allow this to work during fine-tuning, reducing 780GB memory yo a more manageable 48GB
+
+##### Distillation
+- Use ”teacher” model (billion parameter) to generate training data to train “student” model (million parameter)
+- Note these “small” models are still FAR larger than anything currently hosted at many companies
+
+### What does V2 and beyond look like
+![img_5.png](/assets/images/genai-in-prod/version-2.png)
+Using some or all of these techniques, we can reach a state where the accuracy, cost, and latency/throughput of the system is acceptable for production use cases.
+Note that we have re-introduced many of the steps from the ML product lifecycle we were able to leave out in the creation of V1.0,
+which highlights the fact that ...
+This was a recurring theme of the conference, that current gen LLMs are excellent for generic applications and proof-of-concepts,
+however non-generic domains/application and production workloads are going to require a lot of custom work.
+The idea of simply throwing your problems to an LLM API and walking away is heavily marketed by the API providers,
+but the current reality doesn't seem to bear this out.
 ![img_3.png](/assets/images/genai-in-prod/img_3.png)
 *Get better pic and cite*
 
-#### Performance 
-*Need better word than performance, too close to latency*
-▪ There are a lot of performance improvements to be obtained with just foundation
-model
-– RAG and improvements to context
-– Prompt engineering: Few shot prompting, chain-of-thought prompting
-▪ At a certain point, fine-tuning is required, particularly in domain specific
-applications which may not be well represented in training data
-– Particularly true for specialized domains e.g. legal, finance, health
-– Likely to be true for “backroom” aspects of e-commerce
-
-Fine-tuning
-▪ Freeze most/all weights of the foundation model, fit an additional set of weights in
-the model
-▪ Can be done at Open AI/GCP, but in the context of cost/latency section maybe
-doesn’t make sense
-– Relatively cheap to finetune so could be a good V1.1
-▪ Numerous steps
-– Labelling
-– Evaluation
-– Training
-▪ Requires: Labeled examples (data) and evaluation metrics
-▪ Nice to have: OS foundation model, self-hosting
-“unlocking the capabilities that the pretrained model already has but are hard for users to access via prompting alone”
-#### Cost & Latency
-▪ Anecdotally cost and latency of OpenAI APIs too high for production applications,
-particularly for high-volume automated tasks
-▪ These are also the tasks most suitable for training smaller expert models that can
-be self-hosted
-▪ Example task was summarizing web pages for a web search index
-– Open AI API allowed them to evaluate whether LLMs were capable of task
-– Self-hosted open-source model allowed them to summarise every web page in their index
-
-In-house model hosting
-▪ LLMs are BIG
-▪ Naïve self-hosting potentially increases the
-cost of latency
-▪ Need techniques to reduce the size of model
-while retaining performance
-Note even shrking 1000x will require engineering prowess to host effectively
-![img_4.png](/assets/images/genai-in-prod/img_4.png)
-
-Quantisation
-▪ Keep model size, reduce resolution of model
-weights
-▪ For example, float32to float16 or
-float32 to int8
-▪ Recently been extended to allow this to work
-during fine-tuning, reducing 780GB memory
-to a more manageable 48GB
-
-Distillation
-▪ Use ”teacher” model (B parameter) to generate training data to train “student”
-model (M parameter)
-Note these “small” models are still FAR larger than anything we currently host at overstock
-
-### What does V2 and beyond look like
-![img_5.png](/assets/images/genai-in-prod/img_5.png)
-
 Insert a16z app stack image compared to ml in context
-https://a16z.com/emerging-architectures-for-llm-applications/​
+https://a16z.com/emerging-architectures-for-llm-applications/
 
-This is a “asset light” stack i.e. assumes no fine-tuning or self-hosting​
+This is a “asset light” stack i.e. assumes no fine-tuning or self-hosting
+Fine-tuning adds an offline data pipeline and evaluation, self-hosting requires more again
 
-Fine tuning adds an offline data pipeline and evaluation, self-hosting requires more again
+What this has really done is accelerated the trend of ML products needing science as the lynchpin to needing engineering as the lynchpin.
+If your company has been investing in its MLOps capabilities, none of the above should sound worrying to you,
+however if they haven't your company is at risk of falling further behind.
+
 ## Generative AI in Production
 - Good Science necessary but not sufficient
   - Designing good evaluation
@@ -181,33 +182,4 @@ Fine tuning adds an offline data pipeline and evaluation, self-hosting requires 
   - Generative models exaggerates this due to greater capabilities and risks
 - Data ...
 
-### Engineering: Pipelines
-### Engineering: Monitoring & Observability
-### Engineering: UX
-### Engineering: Guardrails
-### Science: Fine-tuning
-### Science: Evaluation
-### Data: Training and evaluation
-### Data: Generatively Generated
-
-## Practical next steps
-Chip huyen link
-https://huyenchip.com/2023/06/07/generative-ai-strategy.html
-
-## Conclusion
-A generative culture
-- Big Data infrastructure has always been rock solid here
-- Addition of ML workloads created new valuable datasets
-- Creation of infrastructure allowed new ML workloads
-- Ultimately the value from all this is generated from the use cases
-- Success in areas drove improvements in other areas
-- Even failures lead to learnings that have improved later use cases
-
-▪ Generative AI allows getting to proof of concept much quicker
-▪ Data data data
-– “Private data is a durable moat”
-▪ Engineering problem more than a science problem
-▪ We’re lucky that Overstock has a deep data and ML infrastructure
-▪ What are the use cases?
-– The more use cases we work on, the more we understand the powers and limitation of these
-systems
+In part 2, we will examine some of the details of the Engineering, Science, and Data needed for succeeding with GenAI products.
